@@ -16,12 +16,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.danilo.whatisthis.domains.UnknownThing;
 import com.danilo.whatisthis.fragments.CreateQuestionFrag;
 import com.danilo.whatisthis.R;
+import com.danilo.whatisthis.fragments.DemystifiedThingFragment;
+import com.danilo.whatisthis.fragments.MyCatalogFragment;
+import com.danilo.whatisthis.fragments.dummy.DummyContent;
 
 public class LandingActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, MyCatalogFragment.OnListFragmentInteractionListener {
 
     public static final int TAKE_PHOTO_REQ = 1;
 
@@ -98,7 +103,7 @@ public class LandingActivity extends AppCompatActivity
         if (id == R.id.ask_community) {
             loadFragment(new CreateQuestionFrag(),R.id.content, item.getTitle());
         } else if (id == R.id.your_catalog) {
-
+            loadFragment(MyCatalogFragment.newInstance(1), R.id.content,item.getTitle());
         } else if (id == R.id.categories) {
 
         } else if (id == R.id.nav_manage) {
@@ -119,5 +124,11 @@ public class LandingActivity extends AppCompatActivity
         fragmentTransaction.replace(viewId, fragment);
         fragmentTransaction.commit();
         setTitle(title);
+    }
+
+    @Override
+    public void onListFragmentInteraction(UnknownThing item) {
+        Toast.makeText(this, "On LIst Interact", Toast.LENGTH_SHORT).show();
+        loadFragment(new DemystifiedThingFragment(),R.id.content,item.getId().toString());
     }
 }

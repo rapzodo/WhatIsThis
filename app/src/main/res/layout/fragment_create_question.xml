@@ -1,21 +1,77 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.CreateQuestionFrag">
-
-
-    <com.android.volley.toolbox.NetworkImageView
-        android:layout_width="178dp"
-        android:layout_height="178dp"
-        android:id="@+id/main_image"
-        android:layout_gravity="center_horizontal|top" />
-
-    <Button
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/new_photo_bt"
+        android:id="@+id/circ_img_framel"
+        android:layout_centerHorizontal="true">
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/main_circ_iv"
+            android:layout_width="260dp"
+            android:layout_height="260dp"
+            app:civ_border_color="#EEEEEE"
+            app:civ_border_width="4dp"
+            app:civ_shadow="true"
+            app:civ_shadow_radius="10"
+            app:civ_shadow_color="#8BC34A"
+            android:layout_above="@+id/take_photo"
+            android:src="@drawable/ic_help_outline_white_48dp"/>
+    </FrameLayout>
+
+
+    <com.dd.processbutton.FlatButton
+        android:id="@+id/take_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="take a Shot"
+        app:pb_colorNormal="@color/blue_normal"
+        android:drawableBottom="@drawable/ic_menu_camera"
+        android:layout_below="@+id/circ_img_framel"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_centerHorizontal="true" />
+
+    <com.wrapp.floatlabelededittext.FloatLabeledEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/float_found_loc"
+        android:layout_above="@+id/submit_bt"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/latest_question_edtext"
+            android:hint="What's this?"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+    </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+
+
+    <com.dd.processbutton.iml.ActionProcessButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/submit_bt"
         android:layout_gravity="center"
-        android:background="@drawable/ic_menu_camera"
-        android:singleLine="false" />
-</FrameLayout>
+        android:text="Submit"
+        app:pb_colorNormal="@color/blue_normal"
+        app:pb_colorComplete="@color/green_complete"
+        app:pb_textComplete="Success"
+        app:pb_textError="Error"
+        app:pb_colorError="@color/red_error"
+        app:pb_textProgress="Sending..."
+        app:pb_colorProgress="@color/purple_progress"
+        android:singleLine="false"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:drawableLeft="@drawable/ic_check_circle_black_18dp"/>
+
+
+
+</RelativeLayout>
