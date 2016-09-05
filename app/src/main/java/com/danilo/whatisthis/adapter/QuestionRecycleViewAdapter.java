@@ -42,7 +42,7 @@ public class QuestionRecycleViewAdapter extends RecyclerView.Adapter<QuestionRec
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_thing, parent, false);
+                .inflate(R.layout.question_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -51,24 +51,25 @@ public class QuestionRecycleViewAdapter extends RecyclerView.Adapter<QuestionRec
         Question question = questions.get(position);
         holder.question = question;
         //holder.replierView.setText(question.getAnswer().getReplier().getUsername());
+        holder.questionView.setText(question.getContent());
         holder.answerContentView.setText(question.getAnswer().getAnswerContent());
-        holder.expandableLayout.setInterpolator(Utils.createInterpolator(Utils.BOUNCE_INTERPOLATOR));
+        holder.expandableLayout.setInterpolator(Utils.createInterpolator(Utils.ACCELERATE_INTERPOLATOR));
         holder.expandableLayout.setExpanded(expandState.get(position));
         holder.expandableLayout.setListener(new ExpandableLayoutListenerAdapter() {
 
             @Override
             public void onPreOpen() {
-                createRotation(holder.expandableLayout, 180f,0f);
+                createRotation(holder.expandBt, 90f,0f).start();
                 expandState.put(position,true);
             }
 
             @Override
             public void onPreClose() {
-                createRotation(holder.expandableLayout, 0f,180f);
+                createRotation(holder.expandBt, 0f,90f).start();
                 expandState.put(position,false);
             }
         });
-        holder.expandBt.setRotation(expandState.get(position) ? 180f : 0f );
+        holder.expandBt.setRotation(expandState.get(position) ? 0f : 90f );
         holder.expandBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,9 +109,10 @@ public class QuestionRecycleViewAdapter extends RecyclerView.Adapter<QuestionRec
             return super.toString() + " '" + answerContentView.getText() + "'";
         }
     }
-    private void createRotation(View view, float start, float end){
+    private ObjectAnimator createRotation(View view, float start, float end){
         ObjectAnimator animator = ObjectAnimator.ofFloat(view,"rotation", start,end);
         animator.setDuration(300);
         animator.setInterpolator(Utils.createInterpolator(Utils.LINEAR_INTERPOLATOR));
+        return animator;
     }
 }
